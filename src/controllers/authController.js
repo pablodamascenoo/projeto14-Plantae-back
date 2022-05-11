@@ -41,7 +41,13 @@ export async function login(req, res) {
 
       return res.status(200).send({ token, nome: usuario.nome });
     } else {
+      alerta("email e/ou senha incorretos!");
       res.status(401).send("email e/ou senha incorretos!");
+      return;
     }
-  } catch (erro) {}
+  } catch (erro) {
+    res.status(500).send("erro interno no servidor, tente novamente!");
+    perigo(erro);
+    return;
+  }
 }
