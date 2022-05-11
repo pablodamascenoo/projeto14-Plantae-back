@@ -10,3 +10,8 @@ export const schemaCadastro = Joi.object({
     .label("Confirm password")
     .messages({ "any.only": "{{#label}} does not match" }),
 });
+
+export const schemaLogin = Joi.object({
+  email: Joi.string().email().required(),
+  senha: Joi.string().min(3).max(30).required(),
+});
