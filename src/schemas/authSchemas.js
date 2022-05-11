@@ -6,7 +6,7 @@ export const schemaCadastro = Joi.object({
   senha: Joi.string().min(3).max(30).required(),
   senha2: Joi.string()
     .required()
-    .valid(Joi.ref("password"))
+    .valid(Joi.ref("senha"))
     .label("Confirm password")
     .messages({ "any.only": "{{#label}} does not match" }),
 });
