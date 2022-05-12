@@ -25,3 +25,29 @@ export async function cadastro(req, res) {
     perigo(erro);
   }
 }
+
+export async function login(req, res) {
+  const { email, senha } = res.locals.login;
+
+  try {
+    const usuario = await db.collection("usuarios").findOne({ email });
+
+    if (usuario && bcrypt.compareSync(senha, usuario.senha)) {
+      const token = uuid();
+      await db.collection("sessoes").insertOne({
+        idUsuario: usuario._id,
+        token,
+      });
+
+      return res.status(200).send({ token, nome: usuario.nome });
+    } else {
+      alerta("email e/ou senha incorretos!");
+      res.status(401).send("email e/ou senha incorretos!");
+      return;
+    }
+  } catch (erro) {
+    res.status(500).send("erro interno no servidor, tente novamente!");
+    perigo(erro);
+    return;
+  }
+}
