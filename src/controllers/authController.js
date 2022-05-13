@@ -29,14 +29,6 @@ export async function cadastro(req, res) {
   }
 }
 
-
-export async function produtos (req, res) {
-  let resposta = await db.collection("produtos").find({}).toArray();
-  console.log(resposta);
-  res.send(resposta);
-
-}
-
 export async function login(req, res) {
   const { email, senha } = res.locals.login;
 
