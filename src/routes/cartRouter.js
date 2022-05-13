@@ -5,6 +5,6 @@ import { validaToken } from "../middlewares/authMiddleware";
 
 const cartRouter = Router();
 
-cartRouter.use("/carrinho", validaToken, postCarrinho);
+cartRouter.post("/carrinho", validaToken, postCarrinho);
 
 export default cartRouter;
