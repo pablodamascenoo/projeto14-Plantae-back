@@ -1,8 +1,11 @@
+//Operações (insert, find e delete) com o banco de dados
 import chalk from "chalk";
 import db from "./../db.js";
 import bcrypt from "bcrypt";
 import { v4 as uuid } from "uuid";
 import { alerta, sucesso, perigo } from "../misc/consoleColorido.js";
+import pkg from 'joi';
+const { func } = pkg;
 
 export async function cadastro(req, res) {
   const { nome, email, senha } = res.locals.cadastro;
@@ -51,3 +54,4 @@ export async function login(req, res) {
     return;
   }
 }
+

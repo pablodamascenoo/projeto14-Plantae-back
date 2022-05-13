@@ -1,3 +1,4 @@
+//Configuração da conexão com o banco de dados
 import { MongoClient } from "mongodb";
 import dotenv from "dotenv";
 import chalk from "chalk";

@@ -20,3 +20,10 @@ export async function PaginaProduto(req, res) {
     return;
   }
 }
+
+export async function produtos (req, res) {
+  let resposta = await db.collection("produtos").find({}).toArray();
+  console.log(resposta);
+  res.send(resposta);
+
+}
