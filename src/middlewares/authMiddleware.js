@@ -35,3 +35,28 @@ export async function validaLogin(req, res, next) {
   res.locals.login = value;
   next();
 }
+
+export async function validaToken(req, res, next) {
+  const { authorization } = req.headers;
+  const token = authorization?.replace("Bearer ", "");
+
+  if (!token) return res.status(401).send("Sessão expirada");
+
+  try {
+    const sessao = await db.collection("sessoes").findOne({ token });
+
+    if (!sessao) return res.status(401).send("Sessão expirada");
+
+    const usuario = await db.collection("usuarios").findOne({
+      _id: sessao.idUsuario,
+    });
+
+    if (!usuario) return res.status(401).send("Sessão expirada");
+  } catch (erro) {
+    perigo(`${erro} in token and user middleware`);
+    return res.status(500).send("Erro interno no servidor");
+  }
+
+  res.locals.usuario = usuario;
+  next();
+}
