@@ -1,5 +1,8 @@
+
 //Fuções de validação das requisições
-import { schemaCadastro } from "../schemas/authSchemas.js";
+import { schemaCadastro, schemaLogin } from "../schemas/authSchemas.js";
+import { alerta } from "../misc/consoleColorido.js";
+
 
 export async function validarCadastro(req, res, next) {
   const { nome, email, senha, senha2 } = req.body;
@@ -12,9 +15,26 @@ export async function validarCadastro(req, res, next) {
   });
 
   if (error) {
+    alerta(error);
     res.status(422).send(error.details[0].message);
+    return;
   }
 
   res.locals.cadastro = value;
+  next();
+}
+
+export async function validaLogin(req, res, next) {
+  const { email, senha } = req.body;
+
+  const { error, value } = schemaLogin.validate({ email, senha });
+
+  if (error) {
+    alerta(error);
+    res.status(422).send(error.details[0].message);
+    return;
+  }
+
+  res.locals.login = value;
   next();
 }
