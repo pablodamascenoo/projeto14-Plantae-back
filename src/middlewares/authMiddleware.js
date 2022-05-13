@@ -1,3 +1,4 @@
+//Fuções de validação das requisições
 import { schemaCadastro } from "../schemas/authSchemas.js";
 
 export async function validarCadastro(req, res, next) {
