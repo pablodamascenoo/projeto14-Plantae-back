@@ -1,7 +1,7 @@
 import { Router } from "express";
 
-import { postCarrinho } from "../controllers/cartController";
-import { validaToken } from "../middlewares/authMiddleware";
+import { postCarrinho } from "../controllers/cartController.js";
+import { validaToken } from "../middlewares/authMiddleware.js";
 
 const cartRouter = Router();
 
