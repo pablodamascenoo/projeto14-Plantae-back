@@ -2,7 +2,7 @@ import db from "./../db.js";
 import { perigo } from "../misc/consoleColorido.js";
 
 export async function postCarrinho(req, res) {
-  const { quantidade, idProduto } = req.body;
+  const { quantidade, idProduto } = res.locals.carrinho;
   const { usuario } = res.locals;
 
   try {
