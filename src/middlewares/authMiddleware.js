@@ -1,5 +1,7 @@
 import { alerta } from "../misc/consoleColorido.js";
 import { schemaCadastro, schemaLogin } from "../schemas/authSchemas.js";
+import { perigo } from "../misc/consoleColorido.js";
+import db from "../db.js";
 
 export async function validarCadastro(req, res, next) {
   const { nome, email, senha, senha2 } = req.body;
@@ -47,16 +49,15 @@ export async function validaToken(req, res, next) {
 
     if (!sessao) return res.status(401).send("Sessão expirada");
 
-    const usuario = await db.collection("usuarios").findOne({
+    const user = await db.collection("usuarios").findOne({
       _id: sessao.idUsuario,
     });
 
-    if (!usuario) return res.status(401).send("Sessão expirada");
+    if (!user) return res.status(401).send("Sessão expirada");
+    res.locals.usuario = user;
+    next();
   } catch (erro) {
     perigo(`${erro} in token and user middleware`);
     return res.status(500).send("Erro interno no servidor");
   }
-
-  res.locals.usuario = usuario;
-  next();
 }
