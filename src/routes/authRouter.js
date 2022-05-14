@@ -1,4 +1,5 @@
 import { Router } from "express";
+
 import { cadastro, login } from "../controllers/authController.js";
 import { validaLogin, validarCadastro } from "../middlewares/authMiddleware.js";
 

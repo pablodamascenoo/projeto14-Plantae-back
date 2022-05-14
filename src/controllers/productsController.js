@@ -20,3 +20,13 @@ export async function PaginaProduto(req, res) {
     return;
   }
 }
+
+export async function produtos(req, res) {
+  try {
+    let resposta = await db.collection("produtos").find({}).toArray();
+    res.status(200).send(resposta);
+  } catch (erro) {
+    perigo(erro);
+    res.status(500).send(erro);
+  }
+}

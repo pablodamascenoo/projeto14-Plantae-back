@@ -1,6 +1,6 @@
-import { alerta } from "../misc/consoleColorido.js";
+//Fuções de validação das requisições
 import { schemaCadastro, schemaLogin } from "../schemas/authSchemas.js";
-import { perigo } from "../misc/consoleColorido.js";
+import { perigo, alerta } from "../misc/consoleColorido.js";
 import db from "../db.js";
 
 export async function validarCadastro(req, res, next) {

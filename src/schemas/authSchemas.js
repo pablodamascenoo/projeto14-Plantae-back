@@ -1,3 +1,4 @@
+//Regras de validação utilizadas pelas funções de validação (middlewares)
 import Joi from "joi";
 
 export const schemaCadastro = Joi.object({
