@@ -5,6 +5,6 @@ import { validaToken } from "../middlewares/authMiddleware.js";
 
 const checkoutRouter = Router();
 
-checkoutRouter.get("/checkout", validaToken, postCheckout);
+checkoutRouter.post("/checkout", validaToken, postCheckout);
 
 export default checkoutRouter;
