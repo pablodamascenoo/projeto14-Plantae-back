@@ -4,7 +4,7 @@ import { ObjectID } from "bson";
 
 export async function PaginaProduto(req, res) {
   const { id } = req.params;
-
+  
   if (id.length < 24) return res.sendStatus(404);
 
   try {
