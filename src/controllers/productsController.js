@@ -21,9 +21,12 @@ export async function PaginaProduto(req, res) {
   }
 }
 
-export async function produtos (req, res) {
-  let resposta = await db.collection("produtos").find({}).toArray();
-  console.log(resposta);
-  res.send(resposta);
-
+export async function produtos(req, res) {
+  try {
+    let resposta = await db.collection("produtos").find({}).toArray();
+    res.status(200).send(resposta);
+  } catch (erro) {
+    perigo(erro);
+    res.status(500).send(erro);
+  }
 }

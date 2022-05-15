@@ -1,8 +1,7 @@
-
 //Fuções de validação das requisições
 import { schemaCadastro, schemaLogin } from "../schemas/authSchemas.js";
-import { alerta } from "../misc/consoleColorido.js";
-
+import { perigo, alerta } from "../misc/consoleColorido.js";
+import db from "../db.js";
 
 export async function validarCadastro(req, res, next) {
   const { nome, email, senha, senha2 } = req.body;
@@ -37,4 +36,28 @@ export async function validaLogin(req, res, next) {
 
   res.locals.login = value;
   next();
+}
+
+export async function validaToken(req, res, next) {
+  const { authorization } = req.headers;
+  const token = authorization?.replace("Bearer ", "");
+
+  if (!token) return res.status(401).send("Sessão expirada");
+
+  try {
+    const sessao = await db.collection("sessoes").findOne({ token });
+
+    if (!sessao) return res.status(401).send("Sessão expirada");
+
+    const user = await db.collection("usuarios").findOne({
+      _id: sessao.idUsuario,
+    });
+
+    if (!user) return res.status(401).send("Sessão expirada");
+    res.locals.usuario = user;
+    next();
+  } catch (erro) {
+    perigo(`${erro} in token and user middleware`);
+    return res.status(500).send("Erro interno no servidor");
+  }
 }
