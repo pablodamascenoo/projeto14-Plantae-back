@@ -10,7 +10,7 @@ export async function postCarrinho(req, res) {
       .collection("usuarios")
       .updateOne(
         { _id: usuario._id },
-        { $push: { carrinho: [{ idProduto, quantidade }] } }
+        { $push: { carrinho: { idProduto, quantidade } } }
       );
 
     res.sendStatus(201);
