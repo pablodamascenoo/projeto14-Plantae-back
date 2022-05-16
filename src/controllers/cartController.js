@@ -19,3 +19,15 @@ export async function postCarrinho(req, res) {
     res.status(500).send(erro);
   }
 }
+
+export async function getCarrinho(req, res) {
+  const {email} = req.body;
+  try {
+    let resposta = await db.collection("usuarios").findOne({email: email});
+    const {carrinho} = resposta;
+    res.send(carrinho);
+    //res.send("sucesso na requisição")
+  }catch (erro) {
+    res.send(erro);
+  }
+}
