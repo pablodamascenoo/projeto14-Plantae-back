@@ -3,8 +3,10 @@ import dayjs from "dayjs";
 import { perigo } from "../misc/consoleColorido.js";
 import { ObjectID } from "bson";
 
+//TODO: verificar amanhã no thunderclient se está funcionando e arrumar o que não estiver
 export async function postCheckout(req, res) {
   const { usuario } = res.locals;
+  const { informacoes } = res.locals.info;
 
   try {
     const produtos = await db.collection("produtos").find({}).toArray();
@@ -28,6 +30,8 @@ export async function postCheckout(req, res) {
       idUsuario: usuario._id,
       data: dayjs().format("DD/MM/YYYY"),
       produtos: itensComprados,
+      endereco: informacoes.endereco,
+      pagamento: informacoes.pagamento,
     };
 
     await db.collection("checkout").insertOne(checkout);
@@ -39,7 +43,7 @@ export async function postCheckout(req, res) {
       }
     );
 
-    res.sendStatus(200);
+    res.sendStatus(201);
   } catch (erro) {
     perigo(erro);
     res.status(500).send("erro interno no servidor!");
