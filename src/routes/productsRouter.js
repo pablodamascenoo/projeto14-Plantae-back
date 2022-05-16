@@ -5,6 +5,6 @@ const productsRouter = Router();
 
 productsRouter.get("/produtos/:id", PaginaProduto);
 productsRouter.get("/produtos", produtos);
-//
+
 
 export default productsRouter;
