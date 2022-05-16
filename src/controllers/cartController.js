@@ -10,7 +10,7 @@ export async function postCarrinho(req, res) {
       .collection("usuarios")
       .updateOne(
         { _id: usuario._id },
-        { $push: { carrinho: [{ idProduto, quantidade }] } }
+        { $push: { carrinho: { idProduto, quantidade } } }
       );
 
     res.sendStatus(201);
@@ -21,13 +21,7 @@ export async function postCarrinho(req, res) {
 }
 
 export async function getCarrinho(req, res) {
-  const {email} = req.body;
-  try {
-    let resposta = await db.collection("usuarios").findOne({email: email});
-    const {carrinho} = resposta;
-    res.send(carrinho);
-    //res.send("sucesso na requisição")
-  }catch (erro) {
-    res.send(erro);
-  }
+  const { usuario } = res.locals;
+
+  res.status(200).send(usuario.carrinho);
 }
