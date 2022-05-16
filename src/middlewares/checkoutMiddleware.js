@@ -1,10 +1,10 @@
-import { schemaEndereco, schemaPagamento } from "../schemas/checkoutSchemas";
-import { alerta } from "../misc/consoleColorido";
+import { schemaEndereco, schemaPagamento } from "../schemas/checkoutSchemas.js";
+import { alerta } from "../misc/consoleColorido.js";
 
 export async function validaEndereco(req, res, next) {
-  const { endereco, pagamento } = req.body;
+  const { address, pagamento } = req.body;
 
-  const { error } = schemaEndereco.validate({ ...endereco });
+  const { error } = schemaEndereco.validate({ ...address });
 
   if (error) {
     alerta(error);
@@ -12,7 +12,7 @@ export async function validaEndereco(req, res, next) {
   }
 
   const informacoes = {
-    endereco,
+    endereco: address,
     pagamento,
   };
 
@@ -21,9 +21,9 @@ export async function validaEndereco(req, res, next) {
 }
 
 export async function validaPagamento(req, res, next) {
-  const { informacoes } = res.locals.info;
+  const { pagamento } = res.locals.info;
 
-  const { error } = schemaPagamento.validate({ ...informacoes.pagamento });
+  const { error } = schemaPagamento.validate({ ...pagamento });
 
   if (error) {
     alerta(error);
