@@ -6,6 +6,30 @@ export async function postCarrinho(req, res) {
   const { usuario } = res.locals;
 
   try {
+    let produto;
+
+    for (let item of usuario.carrinho) {
+      if (item.idProduto === idProduto) {
+        produto = item.quantidade;
+        break;
+      }
+    }
+
+    if (produto) {
+      let quantidadeNova = produto;
+      quantidadeNova = (quantidadeNova * 1 + quantidade).toString();
+
+      await db
+        .collection("usuarios")
+        .updateOne(
+          { _id: usuario._id, "carrinho.idProduto": `${idProduto}` },
+          { $set: { "carrinho.$": { idProduto, quantidade: quantidadeNova } } }
+        );
+
+      res.sendStatus(201);
+      return;
+    }
+
     await db
       .collection("usuarios")
       .updateOne(
