@@ -41,6 +41,7 @@ export async function validaLogin(req, res, next) {
 export async function validaToken(req, res, next) {
   const { authorization } = req.headers;
   const token = authorization?.replace("Bearer ", "");
+  console.log(req)
 
   if (!token) return res.status(401).send("Sessão expirada");
 
