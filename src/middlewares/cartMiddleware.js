@@ -14,3 +14,17 @@ export async function validaSchemaCarrinho(req, res, next) {
   res.locals.carrinho = value;
   next();
 }
+
+export async function findId(req, res, next) {
+  const { id } = req.params;
+  const { usuario } = res.locals;
+
+  for (let item of usuario.carrinho) {
+    if (item.idProduto === id) {
+      res.locals.id = id;
+      return next();
+    }
+  }
+
+  return res.sendStatus(404);
+}

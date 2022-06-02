@@ -1,5 +1,6 @@
 import db from "./../db.js";
 import { perigo } from "../misc/consoleColorido.js";
+import { ObjectID } from "bson";
 
 export async function postCarrinho(req, res) {
   const { quantidade, idProduto } = res.locals.carrinho;
@@ -66,5 +67,24 @@ export async function getCarrinho(req, res) {
     perigo(erro);
     console.log("Erro na requisição");
     res.status(500).send(erro);
+  }
+}
+
+export async function deleteItem(req, res) {
+  const { id } = res.locals;
+  const { usuario } = res.locals;
+
+  try {
+    await db
+      .collection("usuarios")
+      .updateOne(
+        { _id: usuario._id },
+        { $pull: { carrinho: { idProduto: id } } }
+      );
+    return res.sendStatus(200);
+  } catch (erro) {
+    perigo(erro);
+    console.log("Erro na requisição");
+    return res.status(500).send(erro);
   }
 }
