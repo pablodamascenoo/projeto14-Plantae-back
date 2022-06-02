@@ -22,7 +22,7 @@ export const schemaPagamento = Joi.object({
     .pattern(/^(\d{3}).(\d{3}).(\d{3})-(\d{2})$/)
     .required(),
   codigo: Joi.string()
-    .pattern(/^(\d{4})$/)
+    .pattern(/^(\d{3})$/)
     .required(),
   validade: Joi.string()
     .pattern(/^(\d{4})-(((0)[1-9])|(1)[0-2])$/)
