@@ -52,9 +52,6 @@ export async function getCarrinho(req, res) {
   try {
     let produtos = await db.collection("produtos").find({}).toArray();
 
-    if (carrinho.length === 0) {
-      return res.status(401).send("O carrinho está vazio");
-    }
     const itensCarrinho = carrinho.map((item) => {
       const produto = produtos.find((produto) => {
         return `${produto._id}` === item.idProduto ? true : false;
